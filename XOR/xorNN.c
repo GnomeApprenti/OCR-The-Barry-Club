@@ -96,7 +96,7 @@ int main(void)
 
     int training_set_order[] = {0,1,2,3};
 
-    int nb_epochs = 10000;
+    int nb_epochs = 100000;
 
 
     //entrainement du reseau
@@ -175,5 +175,42 @@ int main(void)
 
         }
     }
+
+    printf("\n");
+
+    printf("Poids finaux des neurones cachés : \n");
+    for (int j=0; j<nb_hidden_nodes; j++) {
+        printf("[ ");
+        for(int k=0; k<nb_inputs; k++) {
+            printf ("%f ", hidden_weights[k][j]);
+        }
+        printf("]\n");
+    }
+
+    printf("\n");
+    printf("Biais finaux des neurones cachés : \n");
+    for (int j=0; j<nb_hidden_nodes; j++) {
+        printf ("%f ", hidden_layer_bias[j]);
+    }
+
+    printf("\n");
+    printf("\nPoids finaux de l'output : \n");
+    for (int j=0; j<nb_outputs; j++) {
+        printf("[ ");
+        for (int k=0; k<nb_hidden_nodes; k++) {
+            printf ("%f ", output_weights[k][j]);
+        }
+        printf("]\n");
+    }
+
+    printf("\n");
+    printf("Biais finaux de l'output : \n");
+    for (int j=0; j<nb_outputs; j++) {
+        printf ("%f ", output_layer_bias[j]);
+
+    }
+
+    printf("\n");
+    printf("\n");
     return 1;
 }

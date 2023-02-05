@@ -1,1 +1,0 @@
-xorNN: xorNN.c
