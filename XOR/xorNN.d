@@ -1,0 +1,35 @@
+xorNN: xorNN.c /run/current-system/sw/include/stdc-predef.h \
+ /run/current-system/sw/include/stdlib.h \
+ /run/current-system/sw/include/bits/libc-header-start.h \
+ /run/current-system/sw/include/features.h \
+ /run/current-system/sw/include/features-time64.h \
+ /run/current-system/sw/include/bits/wordsize.h \
+ /run/current-system/sw/include/bits/timesize.h \
+ /run/current-system/sw/include/sys/cdefs.h \
+ /run/current-system/sw/include/bits/long-double.h \
+ /run/current-system/sw/include/gnu/stubs.h \
+ /run/current-system/sw/include/gnu/stubs-64.h \
+ /run/current-system/sw/include/bits/floatn.h \
+ /run/current-system/sw/include/bits/floatn-common.h \
+ /run/current-system/sw/include/bits/stdlib-bsearch.h \
+ /run/current-system/sw/include/bits/stdlib-float.h \
+ /run/current-system/sw/include/stdio.h \
+ /run/current-system/sw/include/bits/types.h \
+ /run/current-system/sw/include/bits/typesizes.h \
+ /run/current-system/sw/include/bits/time64.h \
+ /run/current-system/sw/include/bits/types/__fpos_t.h \
+ /run/current-system/sw/include/bits/types/__mbstate_t.h \
+ /run/current-system/sw/include/bits/types/__fpos64_t.h \
+ /run/current-system/sw/include/bits/types/__FILE.h \
+ /run/current-system/sw/include/bits/types/FILE.h \
+ /run/current-system/sw/include/bits/types/struct_FILE.h \
+ /run/current-system/sw/include/bits/stdio_lim.h \
+ /run/current-system/sw/include/bits/stdio.h \
+ /run/current-system/sw/include/math.h \
+ /run/current-system/sw/include/bits/math-vector.h \
+ /run/current-system/sw/include/bits/libm-simd-decl-stubs.h \
+ /run/current-system/sw/include/bits/flt-eval-method.h \
+ /run/current-system/sw/include/bits/fp-logb.h \
+ /run/current-system/sw/include/bits/fp-fast.h \
+ /run/current-system/sw/include/bits/mathcalls-helper-functions.h \
+ /run/current-system/sw/include/bits/mathcalls.h

@@ -51,7 +51,7 @@ Uint32 pixel_to_binarise(Uint32 pixel_color, SDL_PixelFormat* format)
     Uint8 r, g, b;
     SDL_GetRGB(pixel_color, format, &r, &g, &b);
 
-    moyenne = r+g+b/3;
+    int moyenne = r+g+b/3;
     if (moyenne > 127)
         r=g=b=255;
     else
