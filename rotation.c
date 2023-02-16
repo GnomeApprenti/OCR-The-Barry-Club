@@ -4,6 +4,19 @@
 #include <err.h>
 #include <math.h>
 
+void SDL_ChangePixel(SDL_Surface* source,SDL_Surface* dest, int x, int y,int i, int j)
+{
+	Uint8 r;
+	Uint8 g;
+	Uint8 b;
+	Uint32* pixelsourcce = source->pixels;
+	Uint32* pixeldest = dest->pixels;
+	SDL_GetRGB(pixelsourcce[(y * source->w) + x],source->format,&r,&g,&b);
+	pixeldest[(j * dest->w) + i] = SDL_MapRGB(dest->format,r,g,b);
+}
+
+
+
 SDL_Surface* SDL_RotationCentral(SDL_Surface* origine, float angle)
 {
  SDL_Surface* destination;
@@ -62,7 +75,6 @@ SDL_Surface* SDL_RotationCentral(SDL_Surface* origine, float angle)
  
 return destination;
 }
-
 int main(int argc,char** argv )
 {
     char* out = "Rot.jpg";
@@ -74,10 +86,6 @@ int main(int argc,char** argv )
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         errx(EXIT_FAILURE,"%s",SDL_GetError());
-    }
-    if (strcmp( argv[2], "--auto") == 0)
-    {
-        AutoRation(path);
     }
     else
     {
