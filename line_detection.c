@@ -318,7 +318,6 @@ SDL_Surface* double_tresholding(SDL_Surface* surface){   //, int min_treshold, i
         res_pixels[i] = color;
     }
 
-    free(surface);
     return res_surface;
 }
 
@@ -373,7 +372,6 @@ SDL_Surface* hysteresis(SDL_Surface* surface){
         res_pixels[res_i] = color;
     }
 
-    free(surface);
     return res_surface;
 }
 
