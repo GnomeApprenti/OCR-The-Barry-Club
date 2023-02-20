@@ -123,11 +123,10 @@ SDL_Surface* gaussian_blur(SDL_Surface* surface){
     //All variables
     int w = surface->w;
     int h = surface->h;
-    // sum, kernel_index, num_in_sum, i, i2, j, j2, coord, blurred_color;
 
     // For each pixel in the image
     for (int i = 0; i < w; i++){
-		for (int j = 0; i < j; j++){
+		for (int j = 0; j  < h; j++){
 
             int sum = 0;
             int kernel_index = 0;
@@ -141,12 +140,11 @@ SDL_Surface* gaussian_blur(SDL_Surface* surface){
                     int coord = ((i+i2) * w + (j+j2));
 
                     //If the coordinates are in the array (the top left pixel of the top left corner doesn't exist)
-                    if (coord > 0 && coord < w*h){
+                    if (coord >= 0 && coord < w*h){
 
                         //We get the rgb values of the pixel, multiply it by our kernel
                         SDL_GetRGB(pixels[coord], surface->format, &r, &g, &b);
-                        sum+= kernel[kernel_index] * floor(0.3 * r + 0.59 * g + 0.11 * b);
-                        //sum += kernel[kernel_index] * r;
+                        sum += kernel[kernel_index] * r;
                         num_in_sum += kernel[kernel_index];
                     }
                     kernel_index++;
@@ -161,7 +159,6 @@ SDL_Surface* gaussian_blur(SDL_Surface* surface){
             res_pixels[coord] = color;
 		}
 	}
-    free(surface);
     return res_surface;
 }
 
