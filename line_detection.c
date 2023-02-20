@@ -180,10 +180,11 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
     int w = surface->w;
     int h = surface->h;
 
+
     // For the non-maximum suppression
-    int orientation[w*h];
-    int magnitude[w*h];
-    int non_max_suppression[w*h];
+    int* orientation = (int*) malloc((w*h) * sizeof(int));
+    int* magnitude = (int*) malloc((w*h) * sizeof(int));
+    int* non_max_suppression = (int*) malloc((w*h) * sizeof(int));
     int nms_build_arrays_index = 0;
 
     // For each pixel in the image
@@ -202,13 +203,10 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
                     int coord = ((i+i2) * w + (j+j2));
 
                     //If the coordinates are in the array (the top left pixel of the top left corner doesn't exist)
-                    if (coord > 0 && coord < w*h){
+                    if (coord >= 0 && coord < w*h){
 
                         // We get the RGB values, calculate it's average and add it to our gradients
                         SDL_GetRGB(pixels[coord], surface->format, &r, &g, &b);
-                        //int average = floor(0.3 * r + 0.59 * g + 0.11 * b);
-                        //gradient_x+= gx_kernel[gradient_kernel_index] * average;
-                        //gradient_y+= gy_kernel[gradient_kernel_index] * average;
                         gradient_x+= gx_kernel[gradient_kernel_index] * r;
                         gradient_y+= gy_kernel[gradient_kernel_index] * r;
                     }
@@ -220,8 +218,7 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
             magnitude[nms_build_arrays_index] = sqrt(gradient_x * gradient_x + gradient_y * gradient_y);
 
             // Update the orientation array
-            orientation[nms_build_arrays_index] = atan(gradient_x/gradient_y);
-
+            orientation[nms_build_arrays_index] = atan(gradient_x/gradient_y) * 180 / M_PI;
             nms_build_arrays_index++;
         }
     }
@@ -233,20 +230,20 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
         for (int nms_j = 0; nms_j < h; nms_j++){
 
             int nms_coord = nms_i * w + nms_j;
-            int act_magnitude = res_pixels[nms_coord];
+            int act_magnitude = magnitude[nms_coord];
             int act_orientation = orientation[nms_coord];
             int neighbour1;
             int neighbour2;
 
-            if ((0 <= act_orientation && act_orientation < M_PI_4) || (7 * M_PI_4 <= act_orientation && act_orientation <= M_PI)) {
+            if ((0 <= act_orientation && act_orientation < M_PI_4) || (7 * M_PI_4 <= act_orientation && act_orientation <= M_PI_2)) {
                 neighbour1 = magnitude[(nms_i + 1) * w + nms_j];
                 neighbour2 = magnitude[(nms_i - 1) * w + nms_j];
             }
-            else if (M_PI_4 <= act_orientation && act_orientation < 3 * M_PI_4) {
+            else if (M_PI_4 <= act_orientation && act_orientation < M_PI_2) {
                 neighbour1 = magnitude[(nms_j + 1) + (nms_i + 1) * w];
                 neighbour2 = magnitude[(nms_j - 1) + (nms_i - 1) * w];
             }
-            else if (3 * M_PI_4 <= act_orientation && act_orientation < 5 * M_PI_4) {
+            else if (M_PI_2 <= act_orientation && act_orientation < 3 * M_PI_4) {
                 neighbour1 = magnitude[(nms_j + 1) + nms_i * w];
                 neighbour2 = magnitude[(nms_j - 1) + nms_i * w];
             }
@@ -273,7 +270,7 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
         if (act_grad > 255){
             color_used = 255;
         }
-        //Probably useless case
+            //Probably useless case
         else if (act_grad < 0){
             color_used = 0;
         }
@@ -285,7 +282,9 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
         res_pixels[res_i] = color;
     }
 
-    free(surface);
+    free(magnitude);
+    free(orientation);
+    free(non_max_suppression);
     return res_surface;
 }
 
