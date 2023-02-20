@@ -214,6 +214,11 @@ SDL_Surface* sobel_operator(SDL_Surface* surface){
                 }
             }
 
+            //To avoid errors
+            if (gradient_y == 0){
+                gradient_y = 1;
+            }
+
             // Update the magnitude array
             magnitude[nms_build_arrays_index] = sqrt(gradient_x * gradient_x + gradient_y * gradient_y);
 

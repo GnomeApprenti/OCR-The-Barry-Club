@@ -22,5 +22,10 @@ line_detection = {OBJ}
 clean:
 	${RM} ${OBJ}
 	${RM} ${EXE}
+	rm gaussian_blur.jpg
+	rm double_treshold.jpg
+	rm hysteresis.jpg
+	rm sobel_operator.jpg
+	rm line_detection
 
 # END
