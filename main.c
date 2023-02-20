@@ -7,36 +7,50 @@
 #include "line_detection.h"
 
 int main(int argc, char *argv[]){
-    // Checks the number of arguments.
-    if (argc != 2)
+    char* blur = "gaussian_blur.jpg";
+    char* sobel = "sobel_operator.jpg";
+    char* double_tresh = "double_treshold.jpg";
+    char* hyste = "hysteresis.jpg";
+
+    if (argc == 1)
+    {
         errx(EXIT_FAILURE, "Usage: image-file");
-
-    // - Initialize the SDL.
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        errx(EXIT_FAILURE, "%s", SDL_GetError());
     }
-
-    // - Create a surface from the colored image.
-    char* path = argv[1];
-    SDL_Surface* surface = load_image(path);
-
-    SDL_Surface* res_surface = gaussian_blur(surface);
-
-
-    // Try to save image as pgn
-    if (IMG_Init(IMG_INIT_PNG) == 0) {
-        printf("Failed to initialize SDL_image: %s\n", IMG_GetError());
-        return 1;
+    char* path  = argv[1];
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        errx(EXIT_FAILURE,"%s",SDL_GetError());
     }
+    else
+    {
+        SDL_Surface* surface  = IMG_Load(path);
+        SDL_Surface* surface2 = SDL_ConvertSurfaceFormat(surface,SDL_PIXELFORMAT_RGB888,0);
 
-    if (IMG_SavePNG(res_surface, "test" ) == -1) {
-        printf("Failed to save surface as PNG: %s\n", IMG_GetError());
-        return 1;
+        //GAUSSIAN BLUR
+        SDL_Surface* blurred = gaussian_blur(surface2);
+        IMG_SaveJPG(blurred,blur,90);
+
+        //SOBEL OPERATOR
+        SDL_Surface* sob_op = sobel_operator(blurred);
+        IMG_SaveJPG(sob_op,sobel,90);
+
+        //DOUBLE TRESHOLD
+        SDL_Surface* double_tresholded = double_tresholding(sob_op);
+        IMG_SaveJPG(double_tresholded,double_tresh,90);
+
+        //HYSTERESIS
+        SDL_Surface* hysteresised = hysteresis(double_tresholded);
+        IMG_SaveJPG(hysteresised,hyste,90);
+
+        //FREE SURFACES
+        SDL_FreeSurface(surface);
+        SDL_FreeSurface(surface2);
+        SDL_FreeSurface(blurred);
+        SDL_FreeSurface(sob_op);
+        SDL_FreeSurface(double_tresholded);
+        SDL_FreeSurface(hysteresised);
+
+        return 0;
     }
-
-    IMG_Quit();
-    SDL_FreeSurface(surface);
-    SDL_Quit();
-    return 0;
 }
 
