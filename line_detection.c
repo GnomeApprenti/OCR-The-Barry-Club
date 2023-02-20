@@ -7,6 +7,7 @@
 #include "line_detection.h"
 
 // TOOLS
+/*
 static void swap(size_t *xp, size_t *yp)
 {
     int temp = *xp;
@@ -90,7 +91,7 @@ static int compute_treshold(int accumulator[][360], int diag, int len){
     return values[values_i/2];
 }
 
-/*
+
 static void crop(SDL_Surface* input, SDL_Surface* output){
     //TODO
 }*/
